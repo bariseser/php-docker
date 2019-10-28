@@ -1,4 +1,4 @@
-FROM phusion/baseimage:latest
+FROM phusion/baseimage:0.11
 
 LABEL maintainer="Baris Eser <bariseser@gmail.com>"
 
@@ -46,12 +46,10 @@ RUN apt-get update && \
         curl \
         vim \
         nano \
-        postgresql-client \
     && apt-get clean
 
 RUN curl -s http://getcomposer.org/installer | php && \
     echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
     mv composer.phar /usr/local/bin/composer
 
-# Source the bash
 RUN . ~/.bashrc
