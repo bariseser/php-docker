@@ -176,11 +176,15 @@ services:
 
   mssql:
     container_name: "${PROJECT_NAME}_mssql"
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Pu8Gge2X
+    build:
+      context: ./mssql
     ports:
-      - 1433:1433
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Pu8Gge2X"
+      ACCEPT_EULA: "Y"
     volumes:
-      - ${DATA_PATH_HOST}/mssql:/var/opt/mssql/data
+      - ${DATA_PATH_HOST}/mssql:/var/opt/mssql/backup
+    networks:
+      - backend
+    restart: always
