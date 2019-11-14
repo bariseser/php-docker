@@ -51,6 +51,19 @@ services:
       - redis
       - rabbitmq
       - phpmyadmin
+      - workspace
+
+  workspace:
+    container_name: "${PROJECT_NAME}_workspace"
+    build:
+      context: ./workspace
+      args:
+        - PHP_VERSION=${PHP_VERSION}
+    volumes:
+      - ${APP_CODE_BASE_PATH}:${APP_CODE_PATH_CONTAINER}
+    networks:
+      - backend
+    restart: always
 
   redis:
     container_name: "${PROJECT_NAME}_redis"
@@ -63,7 +76,7 @@ services:
       - backend
     restart: always
     depends_on:
-      -redis-webui
+      - redis-webui
 
   redis-webui:
     container_name: "${PROJECT_NAME}_redisui"
